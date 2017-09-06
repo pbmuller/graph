@@ -25,6 +25,36 @@ class TestVectorSetMethods(unittest.TestCase):
         except ValueError as ve:
             self.fail(ve.args)
 
+    def test_add_repeat_vector(self):
+        vs = VectorSet(self.parent_node)
+        vs.add(self.vP1)
+        self.assertEqual(vs.add(self.vP1), False)
+
+    def test_len_same_after_failed_add(self):
+        vs = VectorSet(self.parent_node)
+        vs.add(self.vP1)
+        length = len(vs)
+        vs.add(self.vP1)
+        self.assertEqual(len(vs), length)
+
+    def test_remove_succeed(self):
+        vs = VectorSet(self.parent_node)
+        vs.add(self.vP1)
+        self.assertEqual(vs.remove(self.vP1), True)
+
+    def test_remove_failure(self):
+        vs = VectorSet(self.parent_node)
+        self.assertEqual(vs.remove(self.vP1), False)
+
+    def test_in_true(self):
+        vs = VectorSet(self.parent_node)
+        vs.add(self.vP1)
+        self.assertEqual(self.vP1 in vs, True)
+
+    def test_in_false(self):
+        vs = VectorSet(self.parent_node)
+        self.assertEqual(self.vP1 in vs, False)
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -6,7 +6,16 @@ class VectorSet(list):
     """
     Params:
         parent_node: required
-        vectors:
+        vectors: iterable (not a string) collection of vector objects that the VectorSet will be initialized with.
+
+    Initializes a vector set operates in much the same was a python set except it may only contain objects of the type Vector
+    and all of the vectors must be related to the parent in some way, so the parent node of the set must be either the
+    starting node or the finishing node of the vector.
+
+    Exceptions:
+        TypeError: vector param must be iterable
+        TypeError: the members of the vector param must all be objects of type vector
+        TypeError: parent_node param must be of type Node and not NULLNODE
     """
     def __init__(self, parent_node, vectors=[]):
         try:
@@ -15,9 +24,9 @@ class VectorSet(list):
             raise TypeError('vectors param must be iterable')
         for vector in vectors:
             if not isinstance(vector, Vector):
-                raise TypeError('the members of the vectors param must all be ojects of type vector')
+                raise TypeError('the members of the vectors param must all be objects of type vector')
         if not isinstance(parent_node, Node) and parent_node is not Node.NULLNODE:
-            raise TypeError('parent_node param must be of type Node and not the null Node')
+            raise TypeError('parent_node param must be of type Node and not NULLNODE')
         self.parent_node = parent_node
         super().__init__(vectors)
 
@@ -38,6 +47,15 @@ class VectorSet(list):
             super().append(vector)
             return True
         else:
+            return False
+
+    """
+    """
+    def remove(self, vector):
+        try:
+            super().remove(vector)
+            return True
+        except ValueError:
             return False
 
     def __repr__(self):
